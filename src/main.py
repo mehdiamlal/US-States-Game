@@ -24,6 +24,13 @@ def create_states():
 
     return coordinates
     
+def check_state(str, lst):
+    """Checks if the str string is a valid state."""
+    formatted_str = str.title().strip()
+    for i in lst:
+        if i[0] == formatted_str:
+            return i
+    return []
 
 screen = Screen()
 screen.addshape("../img/blank_states_img.gif")
@@ -32,8 +39,19 @@ screen.title("US States Game")
 turtle = Turtle()
 turtle.shape("../img/blank_states_img.gif")
 
-states = create_states()
-show_name(states[0][0], states[0][1:])
+states_list = create_states()
+
+game_is_on = True
+while game_is_on:
+    answer = screen.textinput(title="US States Game", prompt="Enter the name of a state.")
+    state = check_state(answer, states_list)
+    if len(state) > 0:
+        show_name(state[0], state[1:])
+        states_list.remove(state)
+    
+    if len(states_list) == 0:
+        game_is_on = False
+
 
 
 
